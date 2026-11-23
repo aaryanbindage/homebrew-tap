@@ -15,6 +15,8 @@ cask "oathbound" do
     strategy :github_latest
   end
 
+  depends_on :macos
+
   app "Oathbound.app"
 
   zap trash: "~/Library/Application Support/Oathbound"

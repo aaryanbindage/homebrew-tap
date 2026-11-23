@@ -25,6 +25,6 @@ jobs:
           for c in Casks/*.rb; do
             n=$(basename "$c" .rb)
             brew install --cask "aaryanbindage/tap/$n"
-            ls -d /Applications/*.app | grep -i "$n"
+            test -n "$(find /Applications -maxdepth 1 -iname "$n*.app")"
             brew uninstall --cask "aaryanbindage/tap/$n"
           done
