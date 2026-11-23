@@ -1,0 +1,30 @@
+name: Test casks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tap this repo
+        run: |
+          mkdir -p "$(brew --repository)/Library/Taps/aaryanbindage"
+          ln -s "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/aaryanbindage/homebrew-tap"
+      - name: Style and audit
+        run: |
+          brew style aaryanbindage/tap
+          for c in Casks/*.rb; do brew audit --cask --strict "aaryanbindage/tap/$(basename "$c" .rb)"; done
+      - name: Install and uninstall each cask
+        run: |
+          for c in Casks/*.rb; do
+            n=$(basename "$c" .rb)
+            brew install --cask "aaryanbindage/tap/$n"
+            ls -d /Applications/*.app | grep -i "$n"
+            brew uninstall --cask "aaryanbindage/tap/$n"
+          done
