@@ -3,7 +3,10 @@
 macOS apps by [aaryanbindage](https://aaryanbindage.github.io/), installable with Homebrew.
 
 ```sh
+brew tap aaryanbindage/tap
+brew trust --cask aaryanbindage/tap/twinbraid     # newer Homebrew asks you to trust third-party casks
 brew install --cask aaryanbindage/tap/twinbraid   # run two coding agents together
+brew trust --cask aaryanbindage/tap/oathbound
 brew install --cask aaryanbindage/tap/oathbound   # Stormlight Archive fan RPG
 ```
 

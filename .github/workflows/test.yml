@@ -16,6 +16,8 @@ jobs:
         run: |
           mkdir -p "$(brew --repository)/Library/Taps/aaryanbindage"
           ln -s "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/aaryanbindage/homebrew-tap"
+          # Newer Homebrew ignores third-party taps until they are trusted (docs.brew.sh/Tap-Trust).
+          brew trust aaryanbindage/tap 2>/dev/null || true
       - name: Style and audit
         run: |
           brew style aaryanbindage/tap
